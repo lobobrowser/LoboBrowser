@@ -12,5 +12,5 @@
 hs_err_pid*
 
 LoboBrowser.iml
-.idea/*
 target/*
+/.idea/*
