@@ -21,7 +21,9 @@
 /*
  * Created on Mar 14, 2005
  */
-package com.lobobrowser.protocol.about;
+package com.lobobrowser.protocol.vc;
+
+import org.cobraparser.protocol.vc.VcURLConnection;
 
 import java.io.IOException;
 import java.net.Proxy;
@@ -40,7 +42,7 @@ public class Handler extends URLStreamHandler {
    */
   @Override
   protected URLConnection openConnection(final URL arg0) throws IOException {
-    return new AboutURLConnection(arg0);
+    return new VcURLConnection(arg0);
   }
 
   /*

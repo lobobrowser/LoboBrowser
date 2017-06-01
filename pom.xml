@@ -58,6 +58,13 @@
                 <configuration>
                     <outputDirectory>${basedir}/target</outputDirectory>
                     <finalName>primary</finalName>
+                    <archive>
+                        <manifest>
+                            <!--<addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>-->
+                            <mainClass>com.lobobrowser.LoboMain</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>

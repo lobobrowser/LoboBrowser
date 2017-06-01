@@ -47,10 +47,10 @@ import javax.swing.KeyStroke;
 import javax.swing.event.MenuEvent;
 import javax.swing.text.DefaultEditorKit;
 
+import com.lobobrowser.LoboBrowser;
 import org.eclipse.jdt.annotation.NonNull;
 import org.cobraparser.gui.ConsoleModel;
-import org.cobraparser.main.OS;
-import org.cobraparser.main.PlatformInit;
+import com.lobobrowser.utils.OS;
 import com.lobobrowser.primary.settings.SearchEngine;
 import com.lobobrowser.primary.settings.ToolsSettings;
 import org.cobraparser.request.ClientletRequestHandler;
@@ -83,7 +83,7 @@ public class ComponentSource implements NavigatorWindowListener {
   private final DirectorySource directorySource;  
   
   // Mask for Key Stroke 
-  public static final int CMD_CTRL_KEY_MASK = PlatformInit.OS_NAME == OS.MAC ? Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()
+  public static final int CMD_CTRL_KEY_MASK = LoboBrowser.OS_NAME == OS.MAC ? Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()
       : InputEvent.CTRL_MASK;
 
   public ComponentSource(final NavigatorWindow window) {
@@ -230,7 +230,7 @@ public class ComponentSource implements NavigatorWindowListener {
     final JMenu menu = new JMenu("Navigation");
     menu.setMnemonic('N');
 
-    if (PlatformInit.OS_NAME == OS.MAC) {
+    if (LoboBrowser.OS_NAME == OS.MAC) {
       menu.add(menuItem("Back", 'B', KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, CMD_CTRL_KEY_MASK), this.actionPool.backAction));
       menu.add(
           menuItem("Forward", 'F', KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, CMD_CTRL_KEY_MASK), this.actionPool.forwardAction));
@@ -259,7 +259,7 @@ public class ComponentSource implements NavigatorWindowListener {
     menu.setMnemonic('T');
     menu.add(this.searchersMenu);
 
-    menu.add((PlatformInit.OS_NAME == OS.MAC)
+    menu.add((LoboBrowser.OS_NAME == OS.MAC)
         ? menuItem("Preferences...", 'P', KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, CMD_CTRL_KEY_MASK),
             this.actionPool.preferencesAction)
         : menu.add(menuItem("Preferences...", 'P', this.actionPool.preferencesAction)));

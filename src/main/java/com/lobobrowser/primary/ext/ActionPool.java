@@ -32,8 +32,8 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
 
+import com.lobobrowser.LoboBrowser;
 import org.eclipse.jdt.annotation.NonNull;
-import org.cobraparser.main.PlatformInit;
 import com.lobobrowser.primary.gui.SearchDialog;
 import com.lobobrowser.primary.gui.prefs.PreferencesDialog;
 import com.lobobrowser.primary.settings.ToolsSettings;
@@ -310,12 +310,12 @@ public class ActionPool {
 
   class AboutAction extends AbstractAction {
     private static final long serialVersionUID = 2320751811484772090L;
-    final Properties relProps = PlatformInit.getInstance().relProps;
+    final Properties relProps = LoboBrowser.getInstance().relProps;
     public void actionPerformed(final ActionEvent e) {
       window.getTopFrame().alert(
           "LoboBrowser, a pure java web browser.\r\n"
-              + "Version " + relProps.getProperty(PlatformInit.RELEASE_VERSION_STRING) + "\r\n"
-              + "Published on: " + relProps.getProperty(PlatformInit.RELEASE_VERSION_RELEASE_DATE) + "\r\n"
+              + "Version " + relProps.getProperty(LoboBrowser.RELEASE_VERSION_STRING) + "\r\n"
+              + "Published on: " + relProps.getProperty(LoboBrowser.RELEASE_VERSION_RELEASE_DATE) + "\r\n"
               + "© " +  Calendar.getInstance().get(Calendar.YEAR) + " The Lobo Project | XAOS Interactive.\r\n"
               + window.getUserAgent().getInfoUrl());
 

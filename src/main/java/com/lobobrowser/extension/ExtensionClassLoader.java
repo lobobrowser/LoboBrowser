@@ -5,7 +5,7 @@
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public
     License as published by the Free Software Foundation; either
-    verion 2 of the License, or (at your option) any later version.
+    version 2 of the License, or (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -18,21 +18,22 @@
 
     Contact info: lobochief@users.sourceforge.net
  */
-package com.lobobrowser.primary.ext;
+package com.lobobrowser.extension;
 
-import java.net.URLStreamHandler;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 
-public class PrimaryStreamHandlerFactory implements URLStreamHandlerFactory {
-
-  public PrimaryStreamHandlerFactory() {
+public class ExtensionClassLoader extends URLClassLoader {
+  public ExtensionClassLoader(final URL[] urls, final ClassLoader parent, final URLStreamHandlerFactory factory) {
+    super(urls, parent, factory);
   }
 
-  public URLStreamHandler createURLStreamHandler(final String protocol) {
-    if ("data".equals(protocol)) {
-      return new com.lobobrowser.protocol.data.Handler();
-    } else {
-      return null;
-    }
+  public ExtensionClassLoader(final URL[] urls, final ClassLoader parent) {
+    super(urls, parent);
+  }
+
+  public ExtensionClassLoader(final URL[] urls) {
+    super(urls);
   }
 }

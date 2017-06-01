@@ -18,21 +18,40 @@
 
     Contact info: lobochief@users.sourceforge.net
  */
-package com.lobobrowser.primary.ext;
+/*
+ * Created on Mar 14, 2005
+ */
+package com.lobobrowser.protocol.res;
 
+import org.cobraparser.protocol.res.ResURLConnection;
+
+import java.io.IOException;
+import java.net.Proxy;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLStreamHandler;
-import java.net.URLStreamHandlerFactory;
 
-public class PrimaryStreamHandlerFactory implements URLStreamHandlerFactory {
-
-  public PrimaryStreamHandlerFactory() {
+/**
+ * @author J. H. S.
+ */
+public class Handler extends URLStreamHandler {
+  /*
+   * (non-Javadoc)
+   *
+   * @see java.net.URLStreamHandler#openConnection(java.net.URL)
+   */
+  @Override
+  protected URLConnection openConnection(final URL arg0) throws IOException {
+    return new ResURLConnection(arg0);
   }
 
-  public URLStreamHandler createURLStreamHandler(final String protocol) {
-    if ("data".equals(protocol)) {
-      return new com.lobobrowser.protocol.data.Handler();
-    } else {
-      return null;
-    }
+  /*
+   * (non-Javadoc)
+   *
+   * @see java.net.URLStreamHandler#openConnection(java.net.URL, java.net.Proxy)
+   */
+  @Override
+  protected URLConnection openConnection(final URL u, final Proxy p) throws IOException {
+    return this.openConnection(u);
   }
 }

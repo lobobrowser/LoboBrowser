@@ -27,6 +27,7 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.lobobrowser.LoboBrowser;
 import org.cobraparser.clientlet.ClientletException;
 import org.cobraparser.clientlet.ClientletResponse;
 import org.cobraparser.clientlet.ComponentContent;
@@ -35,7 +36,6 @@ import org.cobraparser.clientlet.NavigatorVersionException;
 import org.cobraparser.html.HtmlRendererContext;
 import org.cobraparser.html.gui.HtmlPanel;
 import org.cobraparser.js.JavaScript;
-import org.cobraparser.main.PlatformInit;
 import com.lobobrowser.primary.clientlets.PrimaryClientletSelector;
 import com.lobobrowser.primary.clientlets.html.HtmlContent;
 import com.lobobrowser.primary.clientlets.html.HtmlRendererContextImpl;
@@ -90,7 +90,7 @@ public class ExtensionImpl implements NavigatorExtension {
     wcontext.addMenu("lobo.directory", cs.getDirectoryMenu());
     wcontext.addMenu("lobo.page.services", cs.getPageServicesMenu());
     wcontext.addMenu("lobo.tools", cs.getToolsMenu());
-    //wcontext.addMenu("lobo.extensions", cs.getExtensionsMenu());
+    wcontext.addMenu("lobo.extensions", cs.getExtensionsMenu());
     wcontext.addMenu("lobo.help", cs.getHelpMenu());
     wcontext.addNavigatorWindowListener(cs);
     final NavigationEntry firstEntry = wcontext.getCurrentNavigationEntry();
@@ -152,7 +152,7 @@ public class ExtensionImpl implements NavigatorExtension {
     writer.println("</dl>");
     writer.println("<p></p>");
 
-    if (PlatformInit.getInstance().debugOn) {
+    if (LoboBrowser.getInstance().debugOn) {
       writer.println("<table border='1' width='100%' style='background-color: #E0E0FF; bolder: solid red 2px;'>");
       writer.println("  <tr><th style='padding:.2em'>Details</th></tr>");
       writer.println("  <tr><td style='padding:.2em'>");
