@@ -24,9 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -315,11 +313,10 @@ public class ActionPool {
     final Properties relProps = PlatformInit.getInstance().relProps;
     public void actionPerformed(final ActionEvent e) {
       window.getTopFrame().alert(
-          "gngr, a pure java web browser.\r\n"
+          "LoboBrowser, a pure java web browser.\r\n"
               + "Version " + relProps.getProperty(PlatformInit.RELEASE_VERSION_STRING) + "\r\n"
               + "Published on: " + relProps.getProperty(PlatformInit.RELEASE_VERSION_RELEASE_DATE) + "\r\n"
-              + "copyright (c) 2014  Uproot Labs\r\n"
-              + "copyright (c) 2005, 2008 The Lobo Project.\r\n"
+              + "© " +  Calendar.getInstance().get(Calendar.YEAR) + " The Lobo Project | XAOS Interactive.\r\n"
               + window.getUserAgent().getInfoUrl());
 
     }
