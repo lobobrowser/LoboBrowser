@@ -177,7 +177,7 @@ public class ActionPool {
     final String keywordsText = dialog.getSearchKeywords();
     if (keywordsText != null) {
       try {
-        window.getTopFrame().navigate("about:bookmark-search?" + URLEncoder.encode(keywordsText, "UTF-8"));
+        window.getTopFrame().navigate("cobra:bookmark-search?" + URLEncoder.encode(keywordsText, "UTF-8"));
       } catch (final Exception thrown) {
         throw new IllegalStateException("not expected", thrown);
       }
@@ -469,7 +469,7 @@ public class ActionPool {
 
     public void actionPerformed(final ActionEvent e) {
       try {
-        window.getTopFrame().navigate("about:bookmarks");
+        window.getTopFrame().navigate("cobra:bookmarks");
       } catch (final java.net.MalformedURLException mfu) {
         throw new IllegalStateException("not expected", mfu);
       }

@@ -47,7 +47,7 @@ public class TextViewerWindow extends JFrame {
   private boolean scrollsOnAppends;
 
   public TextViewerWindow() {
-    super("Lobo Text Viewer");
+    super("LoboBrowser Console");
     final UserAgentContext uaContext = null; // TODO
     this.setIconImage(DefaultWindowFactory.getInstance().getDefaultImageIcon(uaContext).getImage());
     final JMenuBar menuBar = this.createMenuBar();

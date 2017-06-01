@@ -698,7 +698,7 @@ public class ComponentSource implements NavigatorWindowListener {
       final boolean hasProtocol = addressText.matches("^[a-z]+:.*");
       if ((!hasProtocol) && ((!hasPeriod) || hasSpace)) {
         try {
-          final URL url = new URL("about:confirmSearch?" + addressText);
+          final URL url = new URL("cobra:confirmSearch?" + addressText);
           this.navigate(url);
         } catch (MalformedURLException e) {
           window.getTopFrame().alert("Malformed search URL.");
