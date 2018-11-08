@@ -105,7 +105,7 @@ public class CobraURLConnection extends URLConnection {
         "<h1>Welcome to LoboBrowser</h1>" +
         "<p>Version: " + relProps.getProperty(LoboBrowser.RELEASE_VERSION_STRING) + "<br/>" +
         "Published on: " + relProps.getProperty(LoboBrowser.RELEASE_VERSION_RELEASE_DATE) + "</p>" +
-        "<p><b><a href='https://lobobrowser.org'>gngr</a></b> is a browser that cares deeply about privacy.</p>"
+        "<p><b><a href='https://lobobrowser.org'>LoboBrowser</a></b> is a browser that cares deeply about privacy.</p>"
         +
         "<p>It is currently a proof-of-concept, and not very stable or secure.</p>"
         +
