@@ -50,6 +50,7 @@ import java.util.zip.ZipInputStream;
 
 import javax.swing.SwingUtilities;
 
+import org.cobraparser.html.domimpl.HTMLElementBuilder;
 import org.lobobrowser.LoboBrowser;
 import org.lobobrowser.utils.ZipEntryHandler;
 import org.cobraparser.clientlet.Clientlet;
@@ -220,19 +221,22 @@ public class ExtensionManager {
     // a standard name like "lobo-extension.properties" can be automatically fetched
     // using ClassLoader.getResources() method. Uno needs to implement it though (needs URL magic).
     final ClassLoader loader = getClass().getClassLoader();
-    final InputStream indexStream = getClass().getResourceAsStream("/flat-extensions");
-    //final InputStream indexStream = getClass().getResourceAsStream("extension.properties");
+    //final InputStream indexStream = getClass().getResourceAsStream("/flat-extensions");
+    final InputStream indexStream = getClass().getResourceAsStream("/extension.properties");
     if (indexStream != null) {
-      final BufferedReader indexReader = new BufferedReader(new InputStreamReader(indexStream));
+      //final BufferedReader indexReader = new BufferedReader(new InputStreamReader(indexStream));
 
       try {
         String propertyFileName;
-        while ((propertyFileName = indexReader.readLine()) != null) {
+        final Properties extensionAttributes = new Properties();
+        extensionAttributes.load(indexStream);
+        addExtension(new Extension(extensionAttributes, loader));
+        /*while ((propertyFileName = indexReader.readLine()) != null) {
           final InputStream propertyStream = loader.getResourceAsStream(propertyFileName);
           final Properties extensionAttributes = new Properties();
           extensionAttributes.load(propertyStream);
           addExtension(new Extension(extensionAttributes, loader));
-        }
+        }*/
       } catch (final IOException e) {
         logger.log(Level.SEVERE, "Error while reading embedded resources", e);
       }

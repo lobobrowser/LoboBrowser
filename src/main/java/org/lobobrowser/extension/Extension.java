@@ -213,6 +213,26 @@ public class Extension implements Comparable<Object>, NavigatorExtensionContext 
     }
   }
 
+  public InputStream getResource(String filename) {
+    if (filename == null) {
+      throw new IllegalArgumentException("Filename cannot be null");
+    }
+
+    try {
+      URL url = getClassLoader().getResource(filename);
+
+      if (url == null) {
+        return null;
+      }
+
+      URLConnection connection = url.openConnection();
+      connection.setUseCaches(false);
+      return connection.getInputStream();
+    } catch (IOException e) {
+      return null;
+    }
+  }
+
   public ClassLoader getClassLoader() {
     synchronized (this) {
       return this.classLoader;

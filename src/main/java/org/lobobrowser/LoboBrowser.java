@@ -78,7 +78,6 @@ import org.cobraparser.util.Urls;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.OkUrlFactory;
 import com.squareup.okhttp.Protocol;
-import org.lobobrowser.protocol.cobra.Handler;
 
 /**
  * A singleton class that is used to initialize a browser session in the current
@@ -108,7 +107,12 @@ public class LoboBrowser {
    * properties.
    */
   public static void main(final String[] args) {
-    System.setProperty("apple.laf.useScreenMenuBar", "true");
+
+    // Detect if we are running on mac
+    if (isMac()) {
+      System.setProperty("apple.laf.useScreenMenuBar", "true");
+      System.setProperty("dock.name", "LoboBrowser");
+    }
 
     // Checking for stack allows us to call AccessController.doPrivileged()
     // which in turn allows us to reduce the permissions on Uno codesource
@@ -217,19 +221,29 @@ public class LoboBrowser {
   public static void initLookAndFeel() throws Exception {
     // Set appropriate Swing L&F
     boolean nimbusApplied = false;
+    boolean styleApplied = false;
     try {
       for (final LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-        if ("Nimbus".equals(info.getName())) {
-          UIManager.setLookAndFeel(info.getClassName());
-          nimbusApplied = true;
-          break;
+        if (isMac()) {
+          // needed for mac
+          if ("Aqua".equals(info.getName())) {
+            UIManager.setLookAndFeel(info.getClassName());
+            styleApplied = true;
+            break;
+          }
+        } else {
+          if ("Nimbus".equals(info.getName())) {
+            UIManager.setLookAndFeel(info.getClassName());
+            styleApplied = true;
+            break;
+          }
         }
       }
     } catch (final Exception e) {
       e.printStackTrace();
     }
 
-    if (!nimbusApplied) {
+    if (!styleApplied) {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     }
 
@@ -617,5 +631,21 @@ public class LoboBrowser {
     } else {
       return false;
     }
+  }
+
+  public static boolean isWindows() {
+    return OS_NAME.equals(OS.WINDOWS);
+  }
+
+  public static boolean isMac() {
+    return OS_NAME.equals(OS.MAC);
+  }
+
+  public static boolean isUnix() {
+    return OS_NAME.equals(OS.UNIX);
+  }
+
+  public static boolean isSolaris() {
+    return OS_NAME.equals(OS.SOLARIS);
   }
 }

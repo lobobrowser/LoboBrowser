@@ -241,7 +241,15 @@ public class DefaultWindowFactory implements WindowFactory {
     }
     if (icon != null) {
       window.setIconImage(icon.getImage());
+
+      // Are we running on mac? if so, set set doc icon
+      if (LoboBrowser.isMac()) {
+        com.apple.eawt.Application macApp = com.apple.eawt.Application.getApplication();
+        macApp.setDockIconImage(icon.getImage());
+        macApp.setDefaultMenuBar(window.getJMenuBar());
+      }
     }
+
     final java.awt.Dimension windowSize = windowBounds.getSize();
     final java.awt.Rectangle maxBounds = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
     final int maxX = maxBounds.width - windowSize.width;
