@@ -29,7 +29,7 @@
                         <configuration>
                             <mainClass>org.lobobrowser.LoboBrowser</mainClass>
                             <iconFile>images/LoboBrowser.icns</iconFile>
-                            <jrePath>${java.home}</jrePath>
+                            <jrePath>/Library/Java/JavaVirtualMachines/jdk${java.version}.jdk</jrePath>
                             <generateDiskImageFile>true</generateDiskImageFile>
                         </configuration>
                         <executions>
