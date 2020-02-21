@@ -6,7 +6,28 @@
 
     <groupId>org.lobobrowser</groupId>
     <artifactId>LoboBrowser</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
+
+    <name>LoboBrowser</name>
+    <description>LoboBrowser is an extensible all-Java web browser and RIA platform.
+        It supports HTML 5, Javascript (AJAX) and CSS 3 plus direct JavaFX and Java (Swing/AWT)
+        rendering. CobraParser is the web browser's renderer API; also a
+        Javascript-aware HTML parser.</description>
+    <url>https://lobobrowser.org</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>XAOS Interactive</name>
+            <email>info@xaosia.com</email>
+        </developer>
+    </developers>
 
     <properties>
         <kotlin.version>1.3.0</kotlin.version>
@@ -45,6 +66,119 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>ossrh-deploy</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>2.8.2</version>
+                        <executions>
+                            <execution>
+                                <id>default-deploy</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>empty-javadoc-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>javadoc</classifier>
+                                    <classesDirectory>${basedir}/src/main/javadoc</classesDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!--<plugin>
+                        <groupId>org.jetbrains.dokka</groupId>
+                        <artifactId>dokka-maven-plugin</artifactId>
+                        <version>${dokka.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>dokka</goal>
+                                    <goal>javadoc</goal>
+                                    <goal>javadocJar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <sourceDirectories>
+                                <dir>src/main/kotlin</dir>
+                                <dir>src/main/java</dir>
+                            </sourceDirectories>
+                        </configuration>
+                    </plugin>-->
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.8</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>jcenter</id>
+                    <name>JCenter</name>
+                    <url>https://jcenter.bintray.com/</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
     </profiles>
 
     <build>
@@ -79,7 +213,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>1.5</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -132,7 +266,7 @@
         <dependency>
             <groupId>org.cobraparser</groupId>
             <artifactId>Cobra</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
@@ -184,5 +318,22 @@
             <url>http://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git://github.com/lobobrowser/LoboBrowser.git</connection>
+        <developerConnection>scm:git:git@github.com:lobobrowser/LoboBrowser.git</developerConnection>
+        <url>https://github.com/lobobrowser/LoboBrowser</url>
+    </scm>
 
 </project>

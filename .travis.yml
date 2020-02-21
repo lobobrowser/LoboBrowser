@@ -1,0 +1,31 @@
+language: java
+jdk: openjdk8
+
+before_install:
+  - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+  - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+
+install: mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+
+script: mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Possrh-deploy
+
+before_deploy:
+  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+
+deploy:
+  provider: releases
+  api_key:
+    secure: HCZYFvaO9JC+kRfAyWWwknO4ULetPPvTE8zeK+o8C2UAtib467tMFobXQDLlZPyA142DeWTEKt5iNWry25BHlqnrTaXy5cgzS1Qthw4WDtPAECSqiJWirNLI+LlW15eSNkTy5rIdH3wGMYKwOSaGL61A2dKxxeJUMzyvABj45XXFPGxvfJW8WbOZw11bJCbP+Il/ui9rYkE7WrFT4yJyRsSRz/R7Ifn9/vzE6qPt98hBSGTsbgZedHYiL989NvnBbBXfWMicpBnp+mG3YdrhSKuy+GgRqoKjpSk5VkRvl771fJ+hHV+FDo0AhxMK7E58pFmCaPsD7qOZgsDxV4Wp2HV5pfnDl2RFZ9CRbCIHosRbqFEl0SxZ1Q79h9Com3Xmx23ZMXK4gUi6vyH9nNGpWz9K8KvIPBpOp9/PAoYr39bM6pNV+7WHe1DBxHvO5/1kRMnjKgwuOgDqRWgqhiw6TChQnKRX5j34IUk299kqX9Mghhxa96TZGlH2RICYHeVd9zCHzZ7lqmKdFr7zNWRQ2IWGbMl7uPu3NWIPE7HxkOsH9HlxWBWgvHuq+w2vo2R/iR6rT6VvJ7ZErFgjEZJgPY9TC4NRd8t8NkTgxks3GjRUks+BMdUsU0bs7+kA7OEgXbNaWf+Sr1JAqfs2BlIVUNLDLPBRHbRCFjHPR7rl9uk=
+  file:
+    - target/LoboBrowser.jar
+  skip_cleanup: true
+  on:
+    repo: lobobrowser/LoboBrowser
+    tags: true
+  name: $project_version
+
+# send slack notification
+notifications:
+  slack:
+    secure: iOyoW8WmYkT5T1hqt7+OCM7L5R4khPcG6IXUmgXf6HLaa7kFWrna/lxioneQxEljkJ6UiX0h4n44E00dTflpKGHyWSlyZneLqR1cSb7mvJAB75Vvo7Cs9bH6FDGxW9jTcZHzjKedQIekceMOvBfULEvnU9prTFC6iysIpxO1qp4uW+85waLVzobDp4vHJ9Pn5oYgiic9E8ddGR4EymcgreG7V+ilV509IXxl8cK+XRh6AaE9SVuKu5a3G+Na3ncaC1bsH0ul6P8VX7z5uxjNnVPj07U0KRXnauD1xVlpCoqMNtvLBWggISKrJWbBRFCk/QloZPZ1ol6mge//jOve/eoPv7aqY9cMtAiezOTKcYpGBIayzVwPXH1huM6Cf7rGua2Hk9WmgBAyKd2o1XXCNOtK23OQ+oZdqI7GDSRPxX+fCS7nPVvufKQef3RtLeYH2lTff97UW1Nj8kwjDFVrrx6QNMFoajaRw/jnR5ML+yZ2iiCu9CxDwKYo0yuxbxK/MjSgA4pe3QaZY9BiCDnLQsaDnFyiukVhfGdVydlehUu38L46uN7zhKLyRMjGU3RLQb8d/95LqKNpyp+c4PkqiSpDehr4xMHRo1aZAvzXhcNePBghKuaJnzPtajWkLP5JJYxyaeQjduM94EPshoq/bSdbC++sfTIhig/zH2HxxvQ=

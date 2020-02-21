@@ -24,6 +24,12 @@
 package org.lobobrowser.request;
 
 import org.cobraparser.ua.UserAgent;
+import org.cobraparser.util.ID;
+import org.cobraparser.util.LRUCache;
+
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 /**
  * @author J. H. S.
@@ -118,4 +124,5 @@ public class UserAgentImpl implements UserAgent {
   // return sessionID;
   // }
   // }
+
 }
